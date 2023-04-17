@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="kor" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/image/책장옆 복사본.png">
+    <link href="/css/admin/product.css" rel="stylesheet" type="text/css">
+    <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet" type="text/css">
+    <script src="https://kit.fontawesome.com/d2714aa12c.js" crossorigin="anonymous"></script>
+    <script src="/js/admin/product.js" async> </script>
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css" rel="stylesheet">
+    
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	
+	<!-- jQuery UI -->
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+	  
+    <title>책장 옆</title>
+
+</head>
+<body>
+    
+    <header class="page_header wrapper">
+        <a href="">
+            <img class="nav_logo" src="/image/책장옆.png" alt="HOME">
+        </a>
+        <nav>
+            <ul class="main_nav">
+                <li><a href="/main" onclick="return confirm('메인페이지로 이동하여 로그아웃하세요.')">로그아웃</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 사이드 바 -->
+    <aside>
+        <table class="sub_menu">
+            <td>
+                <li><a class="" href="/adminmember/list">&nbsp;&nbsp;&nbsp;회원 관리&nbsp;&nbsp;&nbsp;</a></li>
+                <li><a class="product_management">&nbsp;&nbsp;&nbsp;상품 관리&nbsp;&nbsp;&nbsp;</a></li>
+                <li><a class="" href="/order/list">주문/배송 관리</a></li>
+                <li><a class="" href="../../admincenter/notice">&nbsp;&nbsp;&nbsp;고객 센터&nbsp;&nbsp;&nbsp;</a></li>
+            </td>
+        </table>
+    </aside>
+
+    <!-- 탑 메뉴 -->
+        <table class="top_menu">
+            <tr>
+                <th><a href="../../product/list">상품 조회/수정</a></th>
+                <th><a class="current_page">&nbsp;&nbsp;&nbsp;상품 등록&nbsp;&nbsp;&nbsp;</a></th>
+            </tr>
+        </table>
+
+    <!-- 상단이동버튼 -->
+    <img class="topbtn" src="/image/topbtn.svg" onclick="scrollToTop();"></img>   
+
+    <!-- 카테고리 선택 -->
+    <form class="product_info" action="/product/regist" method="POST" enctype="multipart/form-data">
+        <div class="div_width_top">
+            <label class="label_title">카테고리*</label>
+            
+            <label>
+			  <select name="largeCategory" class="large_select required" id="category">
+			    <option value="">대분류</option>
+			    <option value="1">국내</option>
+			    <option value="2">외국</option>
+			  </select>
+			</label>
+			
+			<label>
+			  <select name="categoryCode" class="sub_select required" id="categoryCode">
+				<option value="">소분류</option>
+			    <option value="3">소설</option>
+			    <option value="5">자기개발</option>
+			    <option value="7">시/에세이</option>
+			    <option value="9">인문/사회</option>
+			    <option value="11">경제/경영</option>
+			    <option value="13">컴퓨터/IT</option>
+			    <option value="15">만화</option>
+			  </select>
+			</label>
+			
+			<script>
+			  const categorySelect = document.querySelector('#category');
+			  const categoryCodeSelect = document.querySelector('#categoryCode');
+			
+			  categorySelect.addEventListener('change', () => {
+			    // '국내'가 선택되었을 경우
+			    if (categorySelect.value === '1') {
+			      categoryCodeSelect.innerHTML = `
+			        <option value="3">소설</option>
+			        <option value="5">자기개발</option>
+			        <option value="7">시/에세이</option>
+			        <option value="9">인문/사회</option>
+			        <option value="11">경제/경영</option>
+			        <option value="13">컴퓨터/IT</option>
+			        <option value="15">만화</option>
+			      `;
+			    }
+			    // '외국'이 선택되었을 경우
+			    else if (categorySelect.value === '2') {
+			      categoryCodeSelect.innerHTML = `
+			        <option value="4">소설</option>
+			        <option value="6">자기개발</option>
+			        <option value="8">시/에세이</option>
+			        <option value="10">인문/사회</option>
+			        <option value="12">경제/경영</option>
+			        <option value="14">컴퓨터/IT</option>
+			        <option value="16">만화</option>
+			      `;
+			    }
+			    // '대분류'가 선택되었을 경우
+  			    else {
+			      categoryCodeSelect.innerHTML = `
+			        <option value="">소분류</option>
+			      `;
+			    }
+			  });
+			</script>
+            
+        </div>
+
+        <br>
+
+        <div class="div_width">
+            <label class="label_title">상품명*</label>
+                <input type="text" id="bookName" name="bookName" class="longinfo required">
+                <span></span>
+        </div>
+
+        <br>
+		
+		<!-- 판매가와 할인률 입력 -->
+        <div class="div_width">
+            <label class="label_title">판매가*</label>
+            <div class="major_info">
+	            <label class="label_title">기본가*</label>
+	            <input type="hidden" id="bookPrice" name="bookPrice" class="shortinfo required">
+	            <input type="text" id="bookPrice2" class="shortinfo">
+	            <label>
+	                할인가
+	                <input type="hidden" id="bookDiscount" name="bookDiscount" class="shortinfo" value="0">
+	                <input type="text" id="bookDiscount2" class="shortinfo" value="0">
+	                <span>원</span>
+	                &nbsp;&nbsp;또는
+	                <input type="text" id="discountPercentage" class="shortinfo" value="0">
+	                <span>%</span>
+	            </label>
+	            <br>
+	            <label class="label_title">
+	            	최종가격
+	            </label>
+	            	<input type="hidden" id="bookTotalPrice" name="bookTotalPrice" class="shortinfo" value="0" readonly>
+	            	<input type="text" id="bookTotalPrice2" class="shortinfo" value="0" readonly>
+            </div>
+        </div>
+        
+         <script>
+   		 // 숫자 3자리마다 쉼표 추가하는 함수
+         function numberWithCommas(x) {
+             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+         }
+   		 
+         // 할인율 및 최종 가격 계산하는 함수
+         function calculate() {
+             // 입력란에서 값을 가져와 쉼표를 제거하고 정수로 변환
+             let bookPrice = parseInt(document.getElementById("bookPrice2").value.replace(/,/g, ""));
+			 let bookDiscount = parseInt(document.getElementById("bookDiscount2").value.replace(/,/g, ""));
+			 document.getElementById("bookPrice2").value = numberWithCommas(bookPrice);
+			 document.getElementById("bookDiscount2").value = numberWithCommas(bookDiscount);
+			 let discountPercentage = parseInt(document.getElementById("discountPercentage").value);
+			 document.getElementById("discountPercentage").value = discountPercentage;
+             let bookTotalPrice = bookPrice - bookDiscount;
+
+             // 할인율이 100을 초과한 경우 강제로 100으로 설정하고 할인 가격 및 최종 가격 다시 계산
+             if (discountPercentage > 100) {
+                 discountPercentage = 100;
+                 document.getElementById("discountPercentage").value = discountPercentage;
+                 bookDiscount = bookPrice * (discountPercentage / 100);
+                 document.getElementById("bookDiscount2").value = numberWithCommas(bookDiscount);
+                 bookTotalPrice = bookPrice - bookDiscount;
+             } else if (discountPercentage < 0) { // 할인율이 0 미만인 경우 경고 메시지 출력
+                 alert("할인율은 0 ~ 100 사이의 값이어야 합니다.");
+                 return;
+             }
+
+             // 판매가가 입력되지 않은 경우 경고 메시지 출력
+/*              if (isNaN(bookPrice)) {
+                 alert("판매가를 입력해주세요.");
+                 return;
+             } */
+
+             // 할인 가격이 입력되지 않은 경우 할인율을 사용하여 계산
+             if (isNaN(bookDiscount)) {
+                 bookDiscount = bookPrice * (discountPercentage / 100);
+                 document.getElementById("bookDiscount2").value = numberWithCommas(bookDiscount);
+             } else { // 할인 가격이 입력된 경우 할인율을 다시 계산
+                 discountPercentage = (bookDiscount / bookPrice) * 100;
+                 document.getElementById("discountPercentage").value = discountPercentage.toFixed(0);
+             }
+
+             // 최종 가격을 쉼표 추가하여 입력란에 표시
+             document.getElementById("bookTotalPrice2").value = numberWithCommas(bookTotalPrice);
+
+             // hidden input 값 업데이트
+             document.getElementById("bookPrice").value = bookPrice;
+             document.getElementById("bookDiscount").value = bookDiscount;
+             document.getElementById("bookTotalPrice").value = bookTotalPrice;
+         }
+
+         // 입력란에 이벤트 리스너 추가하여 값이 변경될 때마다 calculate 함수 호출
+         document.getElementById("bookPrice2").addEventListener("input", calculate);
+         document.getElementById("bookDiscount2").addEventListener("input", calculate);
+         document.getElementById("discountPercentage").addEventListener("input", calculate);
+        </script>
+        
+
+
+        <br>
+		
+		<!-- 재고 수량 입력 -->
+        <div class="div_width">
+            <label class="label_title">재고수량*</label>
+            <input type="hidden" id="bookInventory" name="bookInventory" class="shortinfo required">
+            <input type="text" id="bookInventory2" class="shortinfo">
+                <span>개</span>
+        </div>
+        
+        <script>
+/* 	        document.getElementById('bookInventory2').addEventListener('input', function() {
+	            var value = this.value.replace(/,/g, '');
+	            if (!isNaN(value)) {
+	              var formattedValue = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	              this.value = formattedValue;
+	              document.getElementById('bookInventory').value = value;
+	            } else {
+	              this.value = '';
+	              document.getElementById('bookInventory').value = '';
+	            }
+	          }); */
+	          
+	       // 재고 수량 입력란에 이벤트 리스너 추가하여 값이 변경될 때마다 쉼표 추가 및 hidden input 값 업데이트
+	          document.getElementById("bookInventory2").addEventListener("input", function() {
+	              let bookInventory = parseInt(this.value.replace(/,/g, ""));
+	              if (isNaN(bookInventory)) {
+	                  bookInventory = 0;
+	              }
+	              this.value = numberWithCommas(bookInventory);
+	              document.getElementById("bookInventory").value = bookInventory;
+	          });
+	          
+		</script>
+
+        <br>
+        
+        <!-- 상품 판매상태 체크 -->
+         <div class="div_width">
+            <label class="label_title">판매상태</label>
+            <input type="radio" id="salesStatus" name="salesStatus" value="Y" checked="checked">
+            판매중
+                <span></span>
+            <label>
+                <input type="radio" id="salesStatus" name="salesStatus" value="N">
+                판매중지
+                <span></span>
+            </label>
+       		</div>
+       		
+       		<br>
+       		
+		<!-- 상품 주요정보 입력 -->
+        <div class="div_width">
+            <label class="label_title">상품 주요정보</label>
+            <div class="major_info">
+                <label class="label_title">ISBN*</label><input type="text" id="bookIsbn" name="bookIsbn" class="longinfo required"><br>
+                <!-- <label class="label_title">ISNB-10</label><input type="text" id="ISNB-10" class="longinfo"><br> -->
+                <!-- <label class="label_title">출간일</label><input type="text" id="pub_date" class="shortinfo"> -->
+                <label class="label_title">출판사*</label><input type="text" id="bookPublisher" name="bookPublisher" class="longinfo required"><br>
+                <label class="label_title">작가명*</label><input type="text" id="bookAuthor" name="bookAuthor" class="longinfo required"><br>
+                <label class="label_title">번역자</label><input type="text" id="bookTranslator" name="bookTranslator" class="longinfo"><br>
+            </div>
+        </div>
+        
+<!--         <script>
+        $(function() {
+        	  $('#pub_date').datepicker({
+        	    dateFormat: 'yymmdd',
+        	    onSelect: function(dateText, inst) {
+        	      $(this).val(dateText);
+        	    }
+        	  });
+        	});
+        
+        </script> -->
+
+        <br>
+
+	       	<div class="div_width">
+				  <label class="label_title">상품 이미지</label>
+				  <br>
+				  <table align="center">
+					<tr>
+						<td colspan="3"><input type="text" size="45" name="title"></td>
+					</tr>
+					<tr>
+						<td class="label_title">대표 이미지</td>
+						<td colspan="3">
+							<div class="label_image">
+								<img style="width: 350px; height: 200px;">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="label_title">추가 이미지</td>
+						<td>
+							<div class="label_image">
+								<img style="width: 120px; height: 100px;">
+							</div>
+						</td>
+						<td>
+							<div class="label_image">
+								<img style="width: 120px; height: 100px;">
+							</div>
+						</td>
+						<td>
+							<div class="label_image">
+								<img style="width: 120px; height: 100px;">
+							</div>
+						</td>
+
+					</tr>
+				</table>
+				<div style="display: none;">
+					<input type="file" name="attachImage" accept="image/gif,image/jpeg,image/png"> 
+					<input type="file" name="attachImage" accept="image/gif,image/jpeg,image/png"> 
+					<input type="file" name="attachImage" accept="image/gif,image/jpeg,image/png"> 
+					<input type="file" name="attachImage" accept="image/gif,image/jpeg,image/png">
+				</div>
+			</div>
+		
+		<script>
+		(function(){
+			/* div image-area 요소 */
+			const imageArea = document.querySelectorAll(".label_image");
+			/* input type=file 요소 */
+			const fileElements = document.querySelectorAll("[type=file]");
+			/* div 클릭 시 open 함수 동작 */
+			imageArea.forEach(item => item.addEventListener('click', open));
+			/* 파일 첨부가 발생하는 상황에 preview 함수 동작 */
+			fileElements.forEach(item => item.addEventListener('change', preview));
+			
+			function open() {
+				const index = Array.from(imageArea).indexOf(this);
+				fileElements[index].click();
+			}
+			
+			function preview() {
+				const index = Array.from(fileElements).indexOf(this);
+				console.log(this);
+				console.log(this.files, this.files[0]);
+				/* 첨부 된 파일이 존재한다면 */
+				if(this.files && this.files[0]) {
+					const reader = new FileReader();
+					reader.readAsDataURL(this.files[0]);
+					/* 파일 로드 후 동작하는 이벤트 설정 */
+					reader.onload = function() {
+						console.log(reader.result);
+						if(index === 0)
+							imageArea[index].innerHTML = `<img src='${reader.result}' style='width: 350px; height: 200px'>`;
+						else
+							imageArea[index].innerHTML = `<img src='${reader.result}' style='width: 120px; height: 100px'>`;
+					}
+				}
+			}
+			
+		})();
+		</script>
+
+        <br>
+
+        <div class="div_width">
+            <label class="label_title">상세설명*</label>
+			<br>
+			<textarea name="bookIntroduction" id="bookIntroduction" class="detailbox required"></textarea>
+        
+<!--         <script>
+			
+			/* 위지윅 적용 */
+ 
+				/* 책 소개 */
+				ClassicEditor
+					.create(document.querySelector('#introduction'), {
+
+					})
+					.catch(error=>{
+						console.error(error);
+					});
+			
+		</script> -->
+		
+        </div>
+
+        <br>
+
+        <div class="info_btn">
+            <button id="registBtn" class="btn_1">등록</button>
+        </div>
+        </form>
+    <br><br><br><br><br><br><br><br><br><br>
+	 
+	<script>
+	
+	document.getElementById("registBtn").addEventListener("click", function(event) {
+	    // 필수 입력사항을 가져옴
+	    let requiredInputs = document.querySelectorAll(".required");
+	    let allFilled = true;
+
+	    // 필수 입력사항을 확인
+	    for (let i = 0; i < requiredInputs.length; i++) {
+	        if (requiredInputs[i].value.trim() === "") {
+	            allFilled = false;
+	            break;
+	        }
+	    }
+
+	    // 필수 입력사항이 모두 입력되지 않은 경우 경고 메시지 출력하고 폼 제출 방지
+	    if (!allFilled) {
+	        alert("필수 입력사항을 확인해주세요.");
+	        event.preventDefault();
+	    } else {
+	        // 필수 입력사항이 모두 입력된 경우 폼 제출
+	        document.getElementById("registForm").submit();
+	    }
+	});
+	
+	
+
+	/* 상품 등록 버튼 */
+	/* $(document).ready(function() {
+	  $("#registBtn").on("click", function() {
+	    var formData = {
+		    bookName: $("#bookName").val(),
+		    bookPrice: parseInt($("#bookPrice").val().replace(",", "")),
+		    bookAuthor: $("#bookAuthor").val(),
+		    bookPublisher: $("#bookPublisher").val(),
+		    categoryCode: $("#categoryCode").val(),
+		    bookInventory: parseInt($("#bookInventory").val().replace(",", "")),
+		    salesStatus: $("input[name='salesStatus']:checked").val(), // radio 버튼에서 체크된 값을 가져오기
+		    bookHit: $("#bookHit").val(),
+		    bookIsbn: $("#bookIsbn").val(),
+		    bookTranslator: $("#bookTranslator").val(),
+		    bookIntroduction: $("#bookIntroduction").val(),
+		    bookDiscount: parseInt($("#bookDiscount").val().replace(",", "")),
+		    bookTotalPrice: parseInt($("#bookTotalPrice").val().replace(",", ""))
+	    };
+	
+	    $.ajax({
+	        type: "POST",
+	        contentType: "application/x-www-form-urlencoded",
+	        url: "/product/regist",
+	        data: formData,
+	        success: function(result) {
+	          alert("등록되었습니다.");	
+	        },
+	        error: function(e) {
+	          console.log("ERROR: ", e);
+	          alert("필수 입력사항을 확인해주세요.");
+	        }
+	    });
+	  });
+	}); */
+	
+	</script> 	
+	 
+	 
+   </body>
+</html>

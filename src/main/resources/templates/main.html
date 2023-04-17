@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/common/footer.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="icon" href="../image/책장옆 복사본.png">
+    <title>책장옆</title>
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/js/event.js"></script>
+
+    <style>
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #fff; /* 배경색을 흰색으로 설정, 원하는 색상으로 변경 가능 */
+            z-index: 1000;
+            font-size: 14px;
+        }
+
+        .left, .search, .right {
+            display: flex;
+            align-items: center;
+        }
+
+        .search {
+            justify-content: center;
+            height: 40px;
+            width: 400px;
+            background: #ffffff;
+            border: 1px solid gray;
+            border-radius: 15px 15px 15px 15px;
+        }
+
+        .search input {
+            width: 100%
+            max-width: 700px;
+            margin-right: 10px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            margin-left: 10px
+            font-size: 12px;
+            width: 355px;
+            border: 0px;
+            outline: none;
+            border-radius: 15px 15px 15px 15px;
+        }
+
+        header .search button {
+            border: 0px;
+            background: white;
+            border-radius: 15px 15px 15px 15px;
+            outline: none;
+            float: right;
+            text-align: center;
+
+}
+
+        .logo img {
+            width: auto;
+            height: 40px; /* 로고 이미지 높이를 조절, 원하는 높이로 변경 가능 */
+        }
+
+        .search_img img {
+            height: 20px;
+            width: auto;
+            display: inline-flex;
+        }
+
+        .right ul {
+            display: flex;
+            list-style: none; /* Remove the default list bullet points */
+            padding: 0; /* Remove the default padding */
+        }
+
+        .right button {
+            border-radius: 15px;
+            border: 0px;
+            background-color: white;
+            font-size: 14px;
+            width: 80px;
+            height: 40px;
+            padding: 0 10px;
+        }
+
+        .right button:hover {
+            background-color: #CDE990; /* 원하는 색상으로 변경하세요 */
+            cursor: pointer;
+        }
+
+
+    </style>
+
+
+</head>
+
+<header>
+    <div class="left">
+        <a href="/">
+        <div class="logo"><img src="/image/책장옆.png" alt="logo"></div>
+        </a>
+    </div>
+    <div class="search">
+        <input type="text" placeholder="찾고 싶은 책을 검색해 보세요!">
+        <button class="search_img"><img src="/image/search.png"></button>
+    </div>
+    <div class="fighting">
+        <div class="right">
+            <nav>
+                <ul>
+                    <button onclick="location.href='/sale/salepage?categoryCode=5'">책창고</button>
+                    <th:block sec:authorize="hasRole('USER')">
+                        <li><button onclick="location.href='/mypage/orderhistory'">내 정보</button></li>
+                    </th:block>
+                    <th:block sec:authorize="hasRole('ADMIN')">
+                        <li><button onclick="location.href='/adminmember/list'">관리자</button></li>
+                    </th:block>
+                    <th:block sec:authorize="isAuthenticated()">
+                        <button onclick="location.href='/member/logout'">로그아웃</button>
+                    </th:block>
+                    <th:block sec:authorize="isAnonymous()">
+                        <button onclick="location.href='/member/login'">로그인</button>
+                    </th:block>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+
+
+</header>
+
+<body>
+
+  <div class="slider">
+    <input type="radio" name="slide" id="slide1" checked>
+    <input type="radio" name="slide" id="slide2">
+    <input type="radio" name="slide" id="slide3">
+    <input type="radio" name="slide" id="slide4">
+    <ul id="imgholder" class="imgs">
+        <li><img src="../image/slide1.jpeg"></li>
+        <li><img src="../image/slide2.jpeg"></li>
+        <li><img src="../image/slide3.jpeg"></li>
+        <li><img src="../image/slide4.jpeg"></li>
+    </ul>
+    <div class="bullets">
+        <label for="slide1">&nbsp;</label>
+        <label for="slide2">&nbsp;</label>
+        <label for="slide3">&nbsp;</label>
+        <label for="slide4">&nbsp;</label>
+    </div>
+</div>
+
+
+
+  <div th:replace="/common/footer.html"></div>
+
+</body>
+</html>
