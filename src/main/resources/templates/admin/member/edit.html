@@ -58,61 +58,52 @@
     <div class="text-center">
         <form th:object="${member}" th:action="@{/adminmember/edit}" method="post">
             <div class="my-3">
-                <label form="id">회원ID</label>
-                <input type="text" style="color: #9e9e9e" id="id" name="id" th:field="*{id}"/>
+                <label for="id">회원ID</label>
+                <input type="text" style="color: #9e9e9e" id="id" th:field="*{id}"/>
             </div>
 
             <div class="my-3">
-                <label form="userName">이름</label>
-                <input type="text" id="userName" name="userName"  th:field="*{name}"/>
+                <label for="userName">이름</label>
+                <input type="text" id="userName" th:field="*{name}"/>
             </div>
             <div class="my-3">
-                <label form="userNo">생년월일</label>
-                <input style="color: #9e9e9e" type="text" id="userNo" name="userNo" th:field="*{no}"/>
+                <label for="userNo">생년월일</label>
+                <input style="color: #9e9e9e" type="text" id="userNo" th:field="*{no}"/>
             </div>
               <div class="my-3">
-                <label form="userPhone">연락처</label>
-               <input type="text" id="userPhone" name="userPhone" th:field="*{phone}"/>
+                <label for="userPhone">연락처</label>
+               <input type="text" id="userPhone"th:field="*{phone}"/>
 
             </div>
-            
-            <!-- 보류
+           
             <div class="my-3">
-                <label form="quantity">계정생성일</label>
-                <input style="color: #9e9e9e" type="text" id="quantity" name="quantity" th:text="${member.createUserDate}">
-            </div>
-            <div class="my-3">
-                <label form="quantity">계정삭제일</label>
-                <input type="text" id="quantity" name="quantity" th:text="${member.deleteUserDate}">
-            </div> -->
-
-            <div class="my-3">
-                <label form="userGrade">회원등급</label>
-                <select  id="userGrade" name="userGrade" th:field="*{gradecode}">
-  					<option value="1">1</option>
- 				    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
+                <label for="userGrade">회원등급</label>
+                <select id="userGrade" th:field="*{gradecode}">
+  					<option value="1">일반</option>
+ 				    <option value="2">브론즈</option>
+                    <option value="3">실버</option>
+                    <option value="4">골드</option>
                 </select>
               
             </div>
             <div class="my-3">
-                <label form="userRole">회원권한</label>
-                 <select  id="userRole" name="userRole" th:field="*{rolecode}">
-  					<option value="1">1</option>
- 				    <option value="2">2</option>
+                <label for="userRole">회원권한</label>
+                 <select id="userRole" th:field="*{rolecode}">
+  					<option value="1">일반회원</option>
+ 				    <option value="2">관리자</option>
                 </select>
             </div>
             <div class="my-3">
-                <label form="userStatus">회원상태</label>
-                 <select  id="userStatus" name="userStatus" th:field="*{status}">
-  					<option value="Y">Y</option>
- 				    <option value="N">N</option>
+                <label for="userStatus">회원상태</label>
+                 <select id="userStatus" th:field="*{status}">
+  					<option value="Y">활동회원</option>
+ 				    <option value="N">탈퇴회원</option>
                 </select>
-                
+            </div>
+            
             <div class="my-3">
-                <label form="quantity">임시</label>
-                <input style="color: #9e9e9e" type="text" id="quantity" name="quantity" th:field="*{no}"/>
+                <label for="quantity">임시</label>
+                <input style="color: #9e9e9e" type="text" id="quantity" th:field="*{no}"/>
             </div>
 
     		<div class="row">

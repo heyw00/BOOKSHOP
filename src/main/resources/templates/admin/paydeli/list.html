@@ -45,14 +45,14 @@
         	<div class=searchform>
         	<form id="searchForm" action="/order/list" method="get"
 			style="display: inline-block">
-			<select id="searchCondition" name="searchCondition">
+			<select id="searchCondition" >
 				<option value="orderCode"
 					th:selected="${ paging.searchCondition eq 'orderCode'}">주문번호</option>
 				<option value="id"
 					th:selected="${ paging.searchCondition eq 'id'}">주문회원</option>
 				<option value="orderStatus"
 					th:selected="${ paging.searchCondition eq 'orderStatus'}">상태</option>
-			</select> <input class="search" type="search" id="searchValue" name="searchValue" placeholder="검색어를 입력하세요."
+			</select> <input class="search" type="search" id="searchValue" placeholder="검색어를 입력하세요."
 				th:value="${ paging.searchValue }">
 			<button class="sb" type="submit">조회</button>
 		  </form>
