@@ -91,12 +91,12 @@
         
         <div class="content">
         <label class="lavel-style" >회원등급</label>
-        <p id="gradeCode" class="p-style" th:text="${member.gradecode}">1</p>
+        <p id="gradeCode" class="p-style" th:text="${member.grade.gradeName}">1</p>
        </div>
        
        <div class="content">
         <label class="lavel-style"  >회원권한</label>
-        <p id="rolecode" class="p-style" th:text="${member.rolecode}">1</p>
+        <p id="rolecode" class="p-style" th:text="${member.role.roleDesc}">1</p>
        </div>
        
        <!-- 향후 데이터 추가를 위한 임시 코드 

@@ -10,7 +10,7 @@
 		<result property="orderStatus" column="ORDER_STATUS"/>
 		<result property="orderRecipient" column="ORDER_RECIPIENT"/>
 		<result property="orderRecipientphone" column="ORDER_RECIPIENT_PHONE"/>
-		<result property="destinationNickname" column="ORDER_DESTINATION_NICKNAME0"/>
+		<result property="destinationNickname" column="ORDER_DESTINATION_NICKNAME"/>
 		<result property="postalCode" column="ORDER_POSTAL_CODE"/>
 		<result property="address" column="ORDER_ADDRESS"/>
 		<result property="detailedAddress" column="ORDER_DETAILED_ADDRESS"/>
@@ -131,10 +131,14 @@
         JOIN TBL_DELIVERY C ON (A.ORDER_CODE = C.ORDER_CODE)
         WHERE A.ORDER_CODE = #{ orderCode }
     </select>
+    
    
-   <update id="updateDelivery" parameterType="com.greedy.bookshop.admin.paydeli.model.dto.AdminDeliveryDTO">
-    UPDATE TBL_DELIVERY
-    SET INVOICE_NUMBER = #{invoiceNumber}, DELIVERY_STATUS = #{deliveryStatus}
+   <update id="updateDelivery">
+    UPDATE TBL_DELIVERY 
+    SET 
+    
+    	INVOICE_NUMBER = #{invoiceNumber}, 
+    	DELIVERY_STATUS = #{deliveryStatus}
     WHERE ORDER_CODE = #{orderCode}
 </update>
    	

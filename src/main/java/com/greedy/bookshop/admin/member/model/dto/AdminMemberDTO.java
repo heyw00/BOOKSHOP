@@ -19,9 +19,12 @@ import lombok.Data;
 		private Date deleteUserDate;					//계정삭제일
 		private String status;							//계정탈퇴여부
 
-		private int gradecode;							//회원등급코드
-		private int rolecode;							//회원권한코드
+		private int gradeCode;							//회원등급코드
+		private int roleCode;							//회원권한코드
 		private List<MemberDeliveryDTO> memberDeliveryList; 
+		
+		private MemberGradeDTO grade;
+		private MemberRoleDTO role;
 		
 		
 	

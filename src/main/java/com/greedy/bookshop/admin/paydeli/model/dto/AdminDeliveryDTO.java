@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
+
 @Data
 public class AdminDeliveryDTO {
 
@@ -13,6 +14,7 @@ public class AdminDeliveryDTO {
 	private String deliveryStatus;		//배송상태 
 	private Date deliveryDate;			//배송일자
 	private int orderCode;				//주문번호
+	
 	private int invoiceNumber;			//송장번호
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm")

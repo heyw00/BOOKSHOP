@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class MemberGradeDTO {
 
-	private int gradecode;
-	private String gradename;
+	private int gradeCode;
+	private String gradeName;
 	
 	
 	
