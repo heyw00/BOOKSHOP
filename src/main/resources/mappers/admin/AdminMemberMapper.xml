@@ -105,9 +105,8 @@
         ORDER BY 1 ASC
     </select>
     
-            <select id="selectMemberDetail" parameterType="string" resultMap="memberResultMap">
-        SELECT 
-			  
+     <select id="selectMemberDetail" parameterType="string" resultMap="memberResultMap">
+        SELECT
 			  A.USER_ID
 			, A.USER_NAME
 			, A.USER_NO
@@ -120,9 +119,7 @@
         JOIN TBL_AUTHORITY B ON (A.USER_ROLE_CODE = B.USER_ROLE_CODE)
         JOIN TBL_USER_RATING C ON (A.USER_RATING_CODE = C.USER_RATING_CODE)
         WHERE A.USER_STATUS = 'Y'
-          AND A.USER_ID = #{id}
-          
-          
+          AND A.USER_ID = #{id} 
 
     </select>
     
